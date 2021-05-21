@@ -17,6 +17,7 @@ func PrintDb(conn *sql.DB) {
 	if err != nil {
 		panic("rows broken")
 	}
+	defer conn.Close()
 	for rows.Next() {
 		var buffer string
 		if err = rows.Scan(&buffer); err != nil {
