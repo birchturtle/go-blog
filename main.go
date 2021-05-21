@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	_ "github.com/mattn/go-sqlite"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func init() {
@@ -21,5 +21,5 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/fisk", fisk)
-	http.ListenAndServe(":8080", mux)
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }
