@@ -1,16 +1,25 @@
 package main
 
 import (
-	"fmt"
+	"database/sql"
+	"log"
 	"net/http"
+
+	_ "github.com/mattn/go-sqlite"
 )
 
-func index(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, Blog World (online, too!)")
+func init() {
+	db, err := sql.Open("sqlite3", "blog.sqlite")
+	if err != nil {
+		log.Fatal(err)
+	}
+	PrintDb(db)
+	initMigration()
 }
 
 func main() {
-	fmt.Println("Hello, Blog World!")
-	http.HandleFunc("/", index)
-	http.ListenAndServe(":8080", nil)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", index)
+	mux.HandleFunc("/fisk", fisk)
+	http.ListenAndServe(":8080", mux)
 }

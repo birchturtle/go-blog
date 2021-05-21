@@ -1,6 +1,10 @@
 package main
 
-type User interface {}
+type User interface {
+	name: String,
+	email: String,
+	password: String,
+}
 
 type Invitee struct {}
 
